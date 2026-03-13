@@ -10,7 +10,6 @@ $danger-hover: #bc1818;
 $text: #f3f1f1;
 $text-secondary: #d1d2d3;
 $border: #7d7979;
-
 // Миксины
 @mixin card {
   background: $surface;
@@ -65,6 +64,7 @@ $border: #7d7979;
 
 // Кнопки
 .btn {
+
   padding: 0.5rem 1rem;
   border-radius: 8px;
   border: 1px solid transparent;
@@ -158,7 +158,7 @@ $border: #7d7979;
 }
 
 .book-category {
-  color: $primary;
+  color: rgb(221, 219, 219);
 }
 
 .book-price {
@@ -178,7 +178,9 @@ $border: #7d7979;
   display: flex;
   gap: 0.5rem;
 }
-
+.btn--edit{
+  color:#e2e2e2;
+}
 // Пустой список
 .empty-list {
   @include card;
@@ -217,7 +219,7 @@ $border: #7d7979;
 }
 
 .modal-content {
-  background: $surface;
+  background: rgba(47, 47, 47, 0.973);
   border-radius: 16px;
   width: 100%;
   max-width: 600px;
@@ -273,7 +275,7 @@ form {
   textarea {
     width: 100%;
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(69, 68, 68);
     border: 1px solid $border;
     border-radius: 8px;
     color: $text;

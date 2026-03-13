@@ -1,0 +1,122 @@
+// src/pages/RegisterPage/RegisterPage.scss
+
+// Те же переменные
+$bg: #373636;
+$surface: #7b7a7ab6;
+$primary: #949494;
+$primary-hover: #3a0c0c;
+$danger: #6e0505;
+$text: #f3f1f1;
+$text-secondary: #d1d2d3;
+$border: #7d7979;
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.register-card {
+  background: $surface;
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid $border;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: $text;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $text-secondary;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: 8px;
+    color: $text;
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    &::placeholder {
+      color: rgba($text-secondary, 0.5);
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+
+  &:hover:not(:disabled) {
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.error-message {
+  background: rgba($danger, 0.2);
+  color: $text;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border: 1px solid $danger;
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: $text-secondary;
+
+  a {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 0.5rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

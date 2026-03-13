@@ -1,23 +1,42 @@
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./BooksPage.scss";
-
+import { api } from "../../api";
 import BooksList from "../../components/BooksList";
 import BookModal from "../../components/BookModal";
-import { api } from "../../api";
 
 export default function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState("create"); 
+  const [modalMode, setModalMode] = useState("create");
   const [editingBook, setEditingBook] = useState(null);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  // Загружаем книги при монтировании компонента
+
  
- useEffect(() => {
+  useEffect(() => {
+    // Проверяем, авторизован ли пользователь
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    loadUser();
+    // Загружаем книги при монтировании компонента
     loadBooks();
   }, []);
+
+    const loadUser = async () => {
+    try {
+      const userData = await api.getMe();
+      setUser(userData);
+    } catch (error) {
+      console.error("Ошибка загрузки пользователя");
+      navigate("/login");
+    }
+  };
 
   // Функция загрузки книг с сервера
   const loadBooks = async () => {
@@ -31,6 +50,12 @@ export default function BooksPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+    const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    navigate("/login");
   };
 
   // Открыть модалку для создания
