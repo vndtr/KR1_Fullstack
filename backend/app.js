@@ -6,6 +6,7 @@ const swaggerUi = require('swagger-ui-express');
 const logger = require("./middleware/logger");
 const authRouter = require("./routes/auth");
 const booksRouter = require("./routes/books");
+const usersRouter = require("./routes/users");
 
 const app = express();
 const PORT = 3000;
@@ -93,6 +94,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Маршруты
 app.use("/api/auth", authRouter);
 app.use("/api/books", booksRouter);
+app.use("/api/users", usersRouter);
 
 app.get("/", (req, res) => {
   res.send(" API книжного магазина работает. Используйте /api/books или /api-docs");

@@ -7,15 +7,15 @@ const jwt = require("jsonwebtoken");
 
 let users = require("../data/users");
 
-// Секретные ключи (в реальном проекте хранят в .env)
+// Секретные ключи 
 const ACCESS_SECRET = "bookstore_access_secret_2026";
 const REFRESH_SECRET = "bookstore_refresh_secret_2026";
 
 // Время жизни токенов
-const ACCESS_EXPIRES_IN = "15m";  // 15 минут
-const REFRESH_EXPIRES_IN = "7d";   // 7 дней
+const ACCESS_EXPIRES_IN = "15m";  
+const REFRESH_EXPIRES_IN = "7d";   
 
-// Хранилище активных refresh-токенов (в памяти)
+// Хранилище активных refresh-токенов 
 let refreshTokens = new Set();
 
 // Вспомогательная функция для поиска пользователя по email
@@ -30,18 +30,23 @@ function generateAccessToken(user) {
       sub: user.id,
       email: user.email,
       firstName: user.firstName,
-      lastName: user.lastName
+      lastName: user.lastName,
+      role: user.role,
+      isBlocked: user.isBlocked || false
     },
     ACCESS_SECRET,
-    { expiresIn: ACCESS_EXPIRES_IN }
+    { expiresIn: "15m" }
   );
 }
 
 function generateRefreshToken(user) {
   return jwt.sign(
-    { sub: user.id },
+    { 
+      sub: user.id,
+      role: user.role
+    },
     REFRESH_SECRET,
-    { expiresIn: REFRESH_EXPIRES_IN }
+    { expiresIn: "7d" }
   );
 }
 
@@ -136,7 +141,10 @@ router.post("/register", async (req, res) => {
   if (!email || !firstName || !lastName || !password) {
     return res.status(400).json({ error: "Все поля обязательны" });
   }
-
+console.log("email:", email);
+  console.log("firstName:", firstName);
+  console.log("lastName:", lastName);
+  console.log("password:", password);
   if (findUserByEmail(email)) {
     return res.status(400).json({ error: "Пользователь с таким email уже существует" });
   }
@@ -149,7 +157,9 @@ router.post("/register", async (req, res) => {
       email,
       firstName,
       lastName,
-      password: hashedPassword
+      password: hashedPassword,
+      role: "user",
+      isBlocked: false
     };
 
     users.push(newUser);
@@ -338,7 +348,7 @@ router.post("/refresh", (req, res) => {
  *         description: Пользователь не найден
  */
 router.get("/me", require("../middleware/auth"), (req, res) => {
-  // req.user заполняется в middleware (использует ACCESS_SECRET)
+  // req.user заполняется в middleware 
   const userId = req.user.sub;
   const user = users.find(u => u.id === userId);
   

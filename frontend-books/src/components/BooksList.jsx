@@ -2,7 +2,7 @@
 import React from "react";
 import BookItem from "./BookItem";
 
-export default function BooksList({ books, onEdit, onDelete }) {
+export default function BooksList({ books, onEdit, onDelete,user }) {
   if (!books || books.length === 0) {
     return <div className="empty-list">Книг нет</div>;
   }
@@ -15,6 +15,7 @@ export default function BooksList({ books, onEdit, onDelete }) {
           book={book}
           onEdit={onEdit}
           onDelete={onDelete}
+          user={user} 
         />
       ))}
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function BookItem({ book, onEdit, onDelete }) {
+export default function BookItem({ book, onEdit, onDelete,user }) {
   return (
     <div className="book-row">
    
@@ -21,12 +21,16 @@ export default function BookItem({ book, onEdit, onDelete }) {
       </div>
 
       <div className="book-actions">
+        {user && (user.role === "seller" || user.role === "admin") && (
         <button className="btn btn--edit" onClick={() => onEdit(book)}>
           Редактировать
         </button>
+        )}
+        {user && (user.role === "seller" || user.role === "admin") && (
         <button className="btn btn--delete" onClick={() => onDelete(book.id)}>
           Удалить
         </button>
+        )}
       </div>
     </div>
   );

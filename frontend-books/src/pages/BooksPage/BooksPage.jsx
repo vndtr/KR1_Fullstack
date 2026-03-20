@@ -116,9 +116,11 @@ export default function BooksPage() {
       <header className="header">
         <div className="container">
           <h1> Книжный магазин</h1>
+          {user && (user.role === "seller" || user.role === "admin") && (
           <button className="btn btn--primary" onClick={openCreateModal}>
             Добавить книгу
           </button>
+            )}
         </div>
       </header>
 
@@ -131,6 +133,7 @@ export default function BooksPage() {
               books={books}
               onEdit={openEditModal}
               onDelete={handleDelete}
+              user={user} 
             />
           )}
         </div>
